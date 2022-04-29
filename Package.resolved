@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "urlqueryitemencoder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pitiphong-p/URLQueryItemEncoder.git",
+      "state" : {
+        "revision" : "6408d34ae39c278c83eb4df5b6735f59fb8ae3b9",
+        "version" : "0.2.4"
+      }
+    }
+  ],
+  "version" : 2
+}
