@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "swift-binance-api",
 	platforms: [
-		.macOS(.v12),
+		.macOS(.v10_15),
 		.iOS(.v13),
 	],
     products: [

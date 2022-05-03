@@ -23,22 +23,30 @@ internal final class BinanceApiClient {
 	internal func send<T: BinanceApiRequest>(_ request: T) async throws -> T.Response {
 		let urlRequest = try request.urlRequest(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
 
-		let (data, _) = try await URLSession.shared.data(for: urlRequest)
-		let decoder = JSONDecoder()
+		return try await withCheckedThrowingContinuation { continuation in
+			URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+				guard let responseData = data, error == nil else {
+					continuation.resume(throwing: error != nil ? BinanceApiError.unknown(error!) : BinanceApiError.networkError(data, response) )
+					return
+				}
 
-		let object: BinanceApiResponse<T.Response>?
+				let decoder = JSONDecoder()
 
-		do {
-			object = try decoder.decode(BinanceApiResponse<T.Response>.self, from: data)
-		} catch {
-			throw BinanceApiError.unknown(error)
-		}
+				var object: BinanceApiResponse<T.Response>?
 
-		switch object! {
-			case BinanceApiResponse<T.Response>.error(let error):
-				throw error
-			case BinanceApiResponse<T.Response>.result(let response):
-				return response
+				do {
+					object = try decoder.decode(BinanceApiResponse<T.Response>.self, from: responseData)
+				} catch {
+					continuation.resume(throwing: BinanceApiError.unknown(error))
+				}
+
+				switch object! {
+					case BinanceApiResponse<T.Response>.error(let error):
+						continuation.resume(throwing: error)
+					case BinanceApiResponse<T.Response>.result(let response):
+						continuation.resume(returning: response)
+				}
+			}.resume()
 		}
 	}
 }
