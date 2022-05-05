@@ -1,9 +1,7 @@
 @testable import SwiftBinanceApi
 import XCTest
 
-final class SwiftBinanceWalletTests: XCTestCase {
-    let binance = Binance(apiKey: "", secretKey: "")
-
+final class SwiftBinanceWalletTests: BinanceTestCase {
     func testSystemStatus() {
         runAsyncTest {
             let systemStatus = try await self.binance.wallet.systemStatus()
@@ -17,4 +15,11 @@ final class SwiftBinanceWalletTests: XCTestCase {
             XCTAssertGreaterThan(coinsInfo.count, 0)
         }
     }
+
+	func testApiRestrictions() {
+		runAsyncTest {
+			let apiRestrictions = try await self.binance.wallet.apiRestrictions()
+			XCTAssertGreaterThan(apiRestrictions.createTime, 0)
+		}
+	}
 }

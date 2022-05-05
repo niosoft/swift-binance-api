@@ -19,27 +19,33 @@ internal final class BinanceApiClient {
         return try await withCheckedThrowingContinuation { continuation in
             URLSession.shared.dataTask(with: urlRequest) { data, response, error in
                 guard let responseData = data, error == nil else {
-                    continuation.resume(throwing: error != nil ? BinanceApiError.unknown(error!) : BinanceApiError.networkError(data, response))
+                    if let error = error {
+                        continuation.resume(throwing: BinanceApiError.unknown(error))
+                    } else {
+                        continuation.resume(throwing: BinanceApiError.networkError(data, response))
+                    }
                     return
                 }
 
                 let decoder = JSONDecoder()
 
-                var object: BinanceApiResponse<T.Response>?
-
                 do {
-                    object = try decoder.decode(BinanceApiResponse<T.Response>.self, from: responseData)
+                    let object = try decoder.decode(BinanceApiResponse<T.Response>.self, from: responseData)
+
+                    switch object {
+                    case BinanceApiResponse<T.Response>.error(let error):
+                        continuation.resume(throwing: error)
+                    case BinanceApiResponse<T.Response>.result(let response):
+                        continuation.resume(returning: response)
+                    }
                 } catch {
                     continuation.resume(throwing: BinanceApiError.unknown(error))
-                }
-
-                switch object! {
-                case BinanceApiResponse<T.Response>.error(let error):
-                    continuation.resume(throwing: error)
-                case BinanceApiResponse<T.Response>.result(let response):
-                    continuation.resume(returning: response)
                 }
             }.resume()
         }
     }
+}
+
+extension String: LocalizedError {
+    public var errorDescription: String? { return self }
 }

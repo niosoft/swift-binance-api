@@ -1,9 +1,7 @@
 @testable import SwiftBinanceApi
 import XCTest
 
-final class SwiftBinanceMarketTests: XCTestCase {
-    let binance = Binance(apiKey: "", secretKey: "")
-
+final class SwiftBinanceMarketTests: BinanceTestCase {
     func testServerTime() {
         runAsyncTest {
             let serverTime = try await self.binance.market.serverTime()

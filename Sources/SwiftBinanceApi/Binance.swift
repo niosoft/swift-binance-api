@@ -78,10 +78,17 @@ public extension Binance.Wallet {
         return try await apiClient.send(BinanceWalletRequests.SystemStatusRequest())
     }
 
-    /// Fetch system status.
+    /// Get information of coins (available for deposit and withdraw) for user.
     /// - returns: ``AllCoinsInformation``
     /// - throws: ``BinanceApiError``
     func allCoinsInformation() async throws -> AllCoinsInformation {
         return try await apiClient.send(BinanceWalletRequests.AllCoinInformationRequest())
     }
+
+	/// Fetch system status.
+	/// - returns: ``ApiRestrictions``
+	/// - throws: ``BinanceApiError``
+	func apiRestrictions() async throws -> ApiRestrictions {
+		return try await apiClient.send(BinanceWalletRequests.ApiRestrictionsRequest())
+	}
 }

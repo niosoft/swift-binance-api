@@ -1,4 +1,5 @@
 import XCTest
+import SwiftBinanceApi
 
 extension XCTestCase {
     func runAsyncTest(
@@ -25,6 +26,7 @@ extension XCTestCase {
         waitForExpectations(timeout: timeout)
 
         if let error = thrownError {
+			XCTAssertTrue(error is BinanceApiError)
             XCTFail(
                 "Async error thrown: \(error)",
                 file: file,
