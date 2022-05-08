@@ -1,6 +1,5 @@
 import CryptoKit
 import Foundation
-import URLQueryItemEncoder
 
 internal protocol BinanceApiRequest: Codable {
     associatedtype Response: Decodable

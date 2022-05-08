@@ -3,16 +3,16 @@ import Foundation
 public final class Binance {
     private let apiClient: BinanceApiClient
 
-    let market: Market
-    let wallet: Wallet
+    let spot: Spot
+    let futures: Futures
 
     public init(apiKey: String, secretKey: String, receiveWindow: UInt = 5000) {
         apiClient = BinanceApiClient(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
-        market = Market(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
-        wallet = Wallet(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
+        spot = Spot(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
+        futures = Futures(apiKey: apiKey, secretKey: secretKey, receiveWindow: receiveWindow)
     }
 
-    public final class Market {
+    public final class Spot {
         private let apiClient: BinanceApiClient
 
         fileprivate init(apiKey: String, secretKey: String, receiveWindow: UInt) {
@@ -20,7 +20,7 @@ public final class Binance {
         }
     }
 
-    public final class Wallet {
+    public final class Futures {
         private let apiClient: BinanceApiClient
 
         fileprivate init(apiKey: String, secretKey: String, receiveWindow: UInt) {
@@ -31,7 +31,7 @@ public final class Binance {
 
 // MARK: - Market
 
-public extension Binance.Market {
+public extension Binance.Spot {
     /// Test connectivity to the Rest API and get the current server time.
     /// - returns: `UInt`
     /// - throws: ``BinanceApiError``
@@ -66,11 +66,7 @@ public extension Binance.Market {
     func recentTrades(symbol: String, limit: UInt = 500) async throws -> Trades {
         return try await apiClient.send(BinanceMarketRequests.RecentTradesRequest(symbol: symbol, limit: limit))
     }
-}
 
-// MARK: - Wallet
-
-public extension Binance.Wallet {
     /// Fetch system status.
     /// - returns: ``SystemStatus``
     /// - throws: ``BinanceApiError``
@@ -85,10 +81,42 @@ public extension Binance.Wallet {
         return try await apiClient.send(BinanceWalletRequests.AllCoinInformationRequest())
     }
 
-	/// Fetch system status.
-	/// - returns: ``ApiRestrictions``
-	/// - throws: ``BinanceApiError``
-	func apiRestrictions() async throws -> ApiRestrictions {
-		return try await apiClient.send(BinanceWalletRequests.ApiRestrictionsRequest())
-	}
+    /// Fetch system status.
+    /// - returns: ``ApiRestrictions``
+    /// - throws: ``BinanceApiError``
+    func apiRestrictions() async throws -> ApiRestrictions {
+        return try await apiClient.send(BinanceWalletRequests.ApiRestrictionsRequest())
+    }
+}
+
+// MARK: - Futures
+
+public extension Binance.Futures {
+    /// Latest price for all symbols.
+    /// - returns: ``Prices``
+    /// - throws: ``BinanceApiError``
+    func prices() async throws -> Prices {
+        return try await apiClient.send(BinanceFuturesRequests.PricesRequest())
+    }
+
+    /// Latest price for a symbol.
+    /// - returns: ``Price``
+    /// - throws: ``BinanceApiError``
+    func price(symbol: String) async throws -> Price {
+        return try await apiClient.send(BinanceFuturesRequests.SymbolPriceRequest(symbol: symbol))
+    }
+
+    /// 24 hour rolling window price change statistics for all symbols.
+    /// - returns: ``Prices``
+    /// - throws: ``BinanceApiError``
+    func pricesDaily() async throws -> PricesDaily {
+        return try await apiClient.send(BinanceFuturesRequests.PricesDailyRequest())
+    }
+
+    /// 24 hour rolling window price change statistics for a symbol.
+    /// - returns: ``Price``
+    /// - throws: ``BinanceApiError``
+    func priceDaily(symbol: String) async throws -> PriceDaily {
+        return try await apiClient.send(BinanceFuturesRequests.SymbolPriceDailyRequest(symbol: symbol))
+    }
 }

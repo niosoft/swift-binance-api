@@ -16,7 +16,7 @@ public enum BinanceMarketRequests {
         static let baseUrl: BinanceBaseUrl = .base
         static let endpoint = "v3/exchangeInfo"
 
-        public typealias Response = ExchangeInfo
+        public typealias Response = Binance.Spot.ExchangeInfo
     }
 
     public struct OrderBookRequest: BinanceApiRequest {
@@ -24,7 +24,7 @@ public enum BinanceMarketRequests {
         static let baseUrl: BinanceBaseUrl = .base
         static let endpoint = "v3/depth"
 
-        public typealias Response = OrderBook
+        public typealias Response = Binance.Spot.OrderBook
 
         public let symbol: String
         public let limit: UInt
@@ -35,7 +35,7 @@ public enum BinanceMarketRequests {
         static let baseUrl: BinanceBaseUrl = .base
         static let endpoint = "v3/trades"
 
-        public typealias Response = Trades
+        public typealias Response = Binance.Spot.Trades
 
         public let symbol: String
         public let limit: UInt
