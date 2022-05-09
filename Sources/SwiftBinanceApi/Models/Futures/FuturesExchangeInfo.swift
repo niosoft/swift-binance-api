@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Futures {
-    // MARK: - Account
-
     struct ExchangeInfo: Codable {
         public let timezone: String
         public let serverTime: Int
@@ -22,8 +20,6 @@ public extension Binance.Futures {
             self.symbols = symbols
         }
 
-        // MARK: - Asset
-
         public struct Asset: Codable {
             public let asset: String
             public let marginAvailable: Bool
@@ -35,8 +31,6 @@ public extension Binance.Futures {
                 self.autoAssetExchange = autoAssetExchange
             }
         }
-
-        // MARK: - RateLimit
 
         public struct RateLimit: Codable {
             public let rateLimitType: String
@@ -52,15 +46,13 @@ public extension Binance.Futures {
             }
         }
 
-        // MARK: - Symbol
-
         public struct Symbol: Codable {
             public let symbol: String
             public let pair: String
             public let contractType: ContractType
             public let deliveryDate: Int
             public let onboardDate: Int
-            public let status: Status
+            public let status: ContractStatus
             public let maintMarginPercent: String
             public let requiredMarginPercent: String
             public let baseAsset: String
@@ -80,7 +72,7 @@ public extension Binance.Futures {
             public let orderTypes: [OrderType]
             public let timeInForce: [TimeInForce]
 
-            public init(symbol: String, pair: String, contractType: ContractType, deliveryDate: Int, onboardDate: Int, status: Status, maintMarginPercent: String, requiredMarginPercent: String, baseAsset: String, quoteAsset: String, marginAsset: String, pricePrecision: Int, quantityPrecision: Int, baseAssetPrecision: Int, quotePrecision: Int, underlyingType: String, underlyingSubType: [String], settlePlan: Int, triggerProtect: String, liquidationFee: String, marketTakeBound: String, filters: [Filter], orderTypes: [OrderType], timeInForce: [TimeInForce]) {
+            public init(symbol: String, pair: String, contractType: ContractType, deliveryDate: Int, onboardDate: Int, status: ContractStatus, maintMarginPercent: String, requiredMarginPercent: String, baseAsset: String, quoteAsset: String, marginAsset: String, pricePrecision: Int, quantityPrecision: Int, baseAssetPrecision: Int, quotePrecision: Int, underlyingType: String, underlyingSubType: [String], settlePlan: Int, triggerProtect: String, liquidationFee: String, marketTakeBound: String, filters: [Filter], orderTypes: [OrderType], timeInForce: [TimeInForce]) {
                 self.symbol = symbol
                 self.pair = pair
                 self.contractType = contractType
@@ -106,53 +98,6 @@ public extension Binance.Futures {
                 self.orderTypes = orderTypes
                 self.timeInForce = timeInForce
             }
-        }
-    }
-
-    // MARK: - Filter
-
-    struct Filter: Codable {
-        public let minPrice: String?
-        public let maxPrice: String?
-        public let filterType: FilterType
-        public let tickSize: String?
-        public let stepSize: String?
-        public let maxQty: String?
-        public let minQty: String?
-        public let limit: Int?
-        public let notional: String?
-        public let multiplierDown: String?
-        public let multiplierUp: String?
-        public let multiplierDecimal: String?
-
-        enum CodingKeys: String, CodingKey {
-            case minPrice
-            case maxPrice
-            case filterType
-            case tickSize
-            case stepSize
-            case maxQty
-            case minQty
-            case limit
-            case notional
-            case multiplierDown
-            case multiplierUp
-            case multiplierDecimal
-        }
-
-        public init(minPrice: String?, maxPrice: String?, filterType: FilterType, tickSize: String?, stepSize: String?, maxQty: String?, minQty: String?, limit: Int?, notional: String?, multiplierDown: String?, multiplierUp: String?, multiplierDecimal: String?) {
-            self.minPrice = minPrice
-            self.maxPrice = maxPrice
-            self.filterType = filterType
-            self.tickSize = tickSize
-            self.stepSize = stepSize
-            self.maxQty = maxQty
-            self.minQty = minQty
-            self.limit = limit
-            self.notional = notional
-            self.multiplierDown = multiplierDown
-            self.multiplierUp = multiplierUp
-            self.multiplierDecimal = multiplierDecimal
         }
     }
 }

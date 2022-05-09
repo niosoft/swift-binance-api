@@ -117,7 +117,7 @@ public enum Status: String, Codable {
     case trading = "TRADING"
 }
 
-public enum Intervals: String, Codable {
+public enum Interval: String, Codable {
     case oneMinute = "1m"
     case threeMinutes = "3m"
     case fiveMinutes = "5m"
@@ -141,4 +141,16 @@ public enum ContractType: String, Codable {
     case nextMonth = "NEXT_MONTH"
     case currentQuarter = "CURRENT_QUARTER"
     case nextQuarter = "NEXT_QUARTER"
+    case empty = ""
+}
+
+public enum ContractStatus: String, Codable {
+    case pendingTrading = "PENDING_TRADING"
+    case trading = "TRADING"
+    case preDelivering = "PRE_DELIVERING"
+    case delivering = "DELIVERING"
+    case delivered = "DELIVERED"
+    case preSettle = "PRE_SETTLE"
+    case settling = "SETTLING"
+    case close = "CLOSE"
 }

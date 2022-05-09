@@ -20,11 +20,11 @@ final class SwiftBinanceMarketTests: BinanceTestCase {
 
     func testOrderBook() {
         runAsyncTest {
-            let orderBook1 = try await self.binance.spot.orderBook(symbol: "ADAUSDT")
+            let orderBook1 = try await self.binance.spot.orderBook(symbol: "BTCUSDT")
             XCTAssertEqual(orderBook1.asks.count, 100)
             XCTAssertEqual(orderBook1.bids.count, 100)
 
-            let orderBook2 = try await self.binance.spot.orderBook(symbol: "ADAUSDT", limit: 500)
+            let orderBook2 = try await self.binance.spot.orderBook(symbol: "BTCUSDT", limit: 500)
             XCTAssertEqual(orderBook2.asks.count, 500)
             XCTAssertEqual(orderBook2.bids.count, 500)
         }
@@ -32,13 +32,13 @@ final class SwiftBinanceMarketTests: BinanceTestCase {
 
     func testRecentTrades() {
         runAsyncTest {
-            let recentTrades1 = try await self.binance.spot.recentTrades(symbol: "ADAUSDT")
+            let recentTrades1 = try await self.binance.spot.recentTrades(symbol: "BTCUSDT")
             XCTAssertEqual(recentTrades1.count, 500)
 
-            let recentTrades2 = try await self.binance.spot.recentTrades(symbol: "ADAUSDT", limit: 1000)
+            let recentTrades2 = try await self.binance.spot.recentTrades(symbol: "BTCUSDT", limit: 1000)
             XCTAssertEqual(recentTrades2.count, 1000)
 
-            let recentTrades3 = try await self.binance.spot.recentTrades(symbol: "ADAUSDT", limit: 2000)
+            let recentTrades3 = try await self.binance.spot.recentTrades(symbol: "BTCUSDT", limit: 2000)
             XCTAssertEqual(recentTrades3.count, 1000)
         }
     }

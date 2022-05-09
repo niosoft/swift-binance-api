@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Futures {
-    // MARK: - Price
-
     struct Price: Codable {
         public let symbol: String
         public let price: String
@@ -10,8 +8,6 @@ public extension Binance.Futures {
     }
 
     typealias Prices = [Price]
-
-    // MARK: - PriceDaily
 
     struct PriceDaily: Codable {
         public let symbol: String

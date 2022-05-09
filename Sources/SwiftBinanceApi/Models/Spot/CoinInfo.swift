@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Spot {
-    // MARK: - CoinInfo
-
     struct CoinInfo: Codable {
         public let coin: String
         public let depositAllEnable: Bool
@@ -36,8 +34,6 @@ public extension Binance.Spot {
             self.networkList = networkList
         }
     }
-
-    // MARK: - NetworkList
 
     struct NetworkList: Codable {
         public let network: String

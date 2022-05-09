@@ -1,7 +1,5 @@
 import Foundation
 
-// MARK: - Encode/decode helpers
-
 public class JSONNull: Codable {
     public static func == (_: JSONNull, _: JSONNull) -> Bool {
         return true

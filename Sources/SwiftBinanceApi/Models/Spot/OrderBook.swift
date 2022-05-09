@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Spot {
-    // MARK: - OrderBook
-
     struct OrderBook: Codable {
         public let lastUpdateID: Int
         public let bids: [[String]]

@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Spot {
-    // MARK: - ApiRestrictions
-
     struct ApiRestrictions: Codable {
         public let ipRestrict: Bool
         public let createTime: Int

@@ -1,9 +1,7 @@
 import Foundation
 
 public extension Binance.Futures {
-    // MARK: - Account
-
-    struct Account: Codable {
+    struct AccountInfo: Codable {
         public let feeTier: Int
         public let canTrade: Bool
         public let canDeposit: Bool
@@ -44,8 +42,6 @@ public extension Binance.Futures {
             self.positions = positions
         }
 
-        // MARK: - Asset
-
         public struct Asset: Codable {
             public let asset: String
             public let walletBalance: String
@@ -79,8 +75,6 @@ public extension Binance.Futures {
                 self.updateTime = updateTime
             }
         }
-
-        // MARK: - Position
 
         public struct Position: Codable {
             public let symbol: String

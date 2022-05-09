@@ -1,8 +1,6 @@
 import Foundation
 
 public extension Binance.Spot {
-    // MARK: - SystemStatus
-
     struct SystemStatus: Codable {
         public let status: Status
         public let msg: String
